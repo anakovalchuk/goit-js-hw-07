@@ -11,28 +11,26 @@ const box = document.querySelector("#boxes")
 
 let size = 30;
 
-create.addEventListener("click", createMarkup);
+create.addEventListener("click", handleCreate);
 destroy.addEventListener("click", handleDestroy);
 
-function createMarkup () {
-  if (+input.value < 0 || +input.value > 100) {
-    console.log("error");
-    return;
-  }
-
-  createBoxes(+input.value) 
-}
+function handleCreate () {
+  if (+input.value < 1 || +input.value > 100) {
+        console.log("error");
+        return;
+      }
+    
+      createBoxes(+input.value) 
+    }
 
 function handleDestroy () {
-  box.innerHTML = "";
+  destroyBoxes();
   input.value = "";
 }
 
-function createBoxes(amount) {
-  box.innerHTML = "";
+function createBoxes (amount) {
   size = 30;
-
-  const arr = [];
+  const fragment = document.createDocumentFragment();
 
   for(let i = 0; i < amount; i++) {
     const myBox = document.createElement("div");
@@ -40,9 +38,16 @@ function createBoxes(amount) {
     myBox.style.height = `${size}px`;
     myBox.style.backgroundColor = getRandomHexColor();
 
-    arr.push(myBox);
+    fragment.appendChild(myBox);
     size +=10;
   }
 
-  box.append(...arr)
+  box.innerHTML = '';
+  box.appendChild(fragment);
 }
+
+  function destroyBoxes() {
+    box.innerHTML = ''; 
+  }
+
+
